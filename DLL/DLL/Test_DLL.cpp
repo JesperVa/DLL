@@ -1,5 +1,6 @@
-#include "Link.h"
-#include "List.h"
+#include "Link.hpp"
+#include "List.hpp"
+#include <iostream>
 //#include "TestDLL.h"
 
 class Node :public Link<Node> {
@@ -43,7 +44,7 @@ void TestDLL() {
     Node * nodeB2 = nodeA2->FindNext(2);
     Node * temp = nodeB2->FindNext(2);
     assert(!temp);
-
+	 
     nodeA2->DeleteAfter();
     std::cout << myList;    //1 2 2 3
 

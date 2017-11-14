@@ -18,3 +18,13 @@ public:
 	friend std::ostream& operator<<(std::ostream& cout, List& list) { return list.Print(cout); }
 	void Check();
 };
+
+template <class T>
+List::List()
+{
+}
+
+template <class T>
+List::~List()
+{
+}
