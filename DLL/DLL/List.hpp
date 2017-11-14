@@ -11,8 +11,9 @@ private:
 
 
 public:
-	List() : m_root(nullptr), m_last(nullptr);
-	~List();
+	List() : m_root(nullptr), m_last(nullptr) {};
+
+	//~List();
 	T* First();
 	T* Last();
 	T* PushFront(T*);
@@ -28,32 +29,28 @@ public:
 	bool Invariant(); //Used for Asserts
 };
 
+//No destructor in list?
+//template <class T>
+//List<T>::~List()
+//{
+//	//Deletes all the objects
+//	//Double check with Olle
+//	T* temp = m_root;
+//	while (temp.next != nullptr)
+//	{
+//		temp = temp.next;
+//		delete temp.prev;
+//	}
+//	delete temp;
+//}
+
+
 template <class T>
 bool List<T>::Invariant()
 {
 	return m_root == nullptr && m_last == nullptr || (*m_root) == (*m_root) && (*m_last) == (*m_last);
 }
 
-//
-//template <class T>
-//List<T>::List()
-//{
-//
-//}
-
-template <class T>
-List<T>::~List()
-{
-	//Deletes all the objects
-	//Double check with Olle
-	T* temp = m_root;
-	while (temp.next != nullptr)
-	{
-		temp = temp.next;
-		delete temp.prev;
-	}
-	delete temp;
-}
 
 template <class T>
 T* List<T>::First()
