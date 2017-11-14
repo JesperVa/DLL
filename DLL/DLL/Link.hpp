@@ -66,6 +66,20 @@ T* Link<T>::InsertBefore(T* toInsert)
 	return toInsert;
 }
 
+
+template <class T>
+template <class Arg>
+T* Link<T>::FindNext(const Arg& searchFor)
+{
+	//Might be what Olle is looking for?
+	if (!this->next.Match(searchFor) && !this->next)
+	{
+		return searchFor.FindNext(searchFor);
+	}
+	
+	return nullptr;
+}
+
 template <class T>
 T* Link<T>::DeleteAfter()
 {
@@ -83,13 +97,15 @@ T* Link<T>::DeleteAfter()
 	return this;
 }
 
-template <class Arg, class T>
-T* Link<T>::FindNext(const Arg& searchFor)
-{
-	//Might be what Olle is looking for?
-	if (!m_object.next.Match(searchFor) && !m_object.next)
-	{
-		return searchFor.findNext(searchFor);
-	}
-	return nullptr;
-}
+
+//template <typename Arg, typename T>
+//template <class T, class Arg>
+//T* Link<T>::FindNext(const Arg& searchFor)
+//{
+
+//	if (!this->next.Match(searchFor) && !this->next)
+//	{
+//		return searchFor.findNext(searchFor);
+//	}
+//	return nullptr;
+//}
