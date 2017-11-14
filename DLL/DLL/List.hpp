@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+
 template <class T>
 class List : public Link<T>
 {
@@ -9,7 +11,7 @@ private:
 
 
 public:
-	List();
+	List() : m_root(nullptr), m_last(nullptr);
 	~List();
 	T* First();
 	T* Last();
@@ -27,47 +29,66 @@ public:
 };
 
 template <class T>
-List::List()
+bool List<T>::Invariant()
 {
+	return m_root == nullptr && m_last == nullptr || (*m_root) == (*m_root) && (*m_last) == (*m_last);
+}
+
+//
+//template <class T>
+//List<T>::List()
+//{
+//
+//}
+
+template <class T>
+List<T>::~List()
+{
+	//Deletes all the objects
+	//Double check with Olle
+	T* temp = m_root;
+	while (temp.next != nullptr)
+	{
+		temp = temp.next;
+		delete temp.prev;
+	}
+	delete temp;
 }
 
 template <class T>
-List::~List()
-{
-}
-
-template <class T>
-List::T* First()
+T* List<T>::First()
 {
 	return this->m_root;
 }
 
 template <class T>
-List::T* Last()
+T* List<T>::Last()
 {
 	return this->m_last;
 }
 
 template <class T>
-List::T* PushFront(T* toPush)
+T* List<T>::PushFront(T* toPush)
 {
+	if (m_last == nullptr)
+	{
+		m_last = m_root = toPush;
+		return toPush;
+	}
+
 	m_root.prev = toPush;
 	m_root = toPush;
 	return m_root;
 }
 
 template <class T>
-List::T* PushBack(T* toPush)
+T* List<T>::PopFront()
 {
-	//Should we assume toPush is already pointing at nullptr in both directions?
-	m_last.next = toPush;
-	m_last = toPush;
-	return m_last;
-}
+	if (m_root == nullptr)
+	{
+		return nullptr;
+	}
 
-template <class T>
-List::T* PopFront()
-{
 	T* temp = m_root;
 	m_root = m_root.next;
 	m_root.prev = nullptr;
@@ -75,8 +96,25 @@ List::T* PopFront()
 }
 
 template <class T>
-List::std::ostream& Print(std::ostream& stream)
+std::ostream& List<T>::Print(std::ostream& stream)
 {
 	//Does he want us to use Nodes own print or just print out the data?
-	stream << m_object.data;
+	return stream << m_object.data;
 }
+
+template <class T>
+T* List<T>::PushBack(T* toPush)
+{
+	if (!m_root)
+	{
+		//If root doesn't exists, no values exists in list and thus the root and last is the same object
+		m_last = m_root = toPush;
+		return toPush;
+	}
+	//Should we assume toPush is already pointing at nullptr in both directions?
+	m_last.next = toPush;
+	m_last = toPush;
+	return m_last;
+}
+
+
