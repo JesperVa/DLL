@@ -1,6 +1,7 @@
 #include "Link.hpp"
 #include "List.hpp"
 #include <iostream>
+#include <cassert>
 //#include "TestDLL.h"
 
 class Node :public Link<Node> {

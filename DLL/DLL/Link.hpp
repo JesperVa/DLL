@@ -44,13 +44,13 @@ Link::~Link()
 template <class T>
 Link::T* Next()
 {
-	return next;
+	return this->next;
 }
 
 template <class T>
 Link::T* Prev()
 {
-	return prev;
+	return this->prev;
 }
 
 template <class T>
