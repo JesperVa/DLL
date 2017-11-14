@@ -8,7 +8,7 @@ template <class T>
 class Link
 {
 private:
-	Link* next; Link* prev;
+	T* next; T* prev;
 	friend class List<T>;
 
 	//T* m_object;

@@ -96,7 +96,7 @@ template <class T>
 std::ostream& List<T>::Print(std::ostream& stream)
 {
 	//Does he want us to use Nodes own print or just print out the data?
-	return stream << m_object.data;
+	return stream << this.data;
 }
 
 template <class T>
