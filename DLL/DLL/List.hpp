@@ -7,15 +7,13 @@ class List : public Link<T>
 private:
 	std::ostream& Print(std::ostream&) const;
 
-	//TODO: Make m_root and m_last prev and next
 	Link* m_root;
 	Link* m_last;
-	int count = 0; //Used to double check with invariants
+	int count = 0; //Used for Invariant()
 
 public:
 	List() : m_root(nullptr), m_last(nullptr) {};
 
-	//~List();
 	T* First() const;
 	T* Last() const;
 	T* PushFront(T*);
@@ -25,12 +23,9 @@ public:
 	T* FindFirst(const Arg& searchFor) const { return FindNext(searchFor); }
 
 	friend std::ostream& operator<<(std::ostream& cout, List& list) { return list.Print(cout); }
-	//void Check();
-
 
 	bool Invariant() const; //Used for Asserts
 };
-
 
 template <class T>
 bool List<T>::Invariant() const
@@ -84,7 +79,6 @@ T* List<T>::PopFront()
 		temp->next = temp->prev = nullptr;
 		return temp;
 	}
-	//If next exists we do this TODO:refactor
 
 	next = m_root = m_root->next;
 	m_root->prev = nullptr;

@@ -19,7 +19,6 @@ public:
 	T* Prev() const;
 
 	T* InsertAfter(T*);
-	//T* InsertAfter(const T*);
 	T* InsertBefore(T*);
 	T* DeleteAfter();
 
@@ -47,7 +46,6 @@ T* Link<T>::Next() const { return static_cast<T*>(this->next); }
 template <class T>
 T* Link<T>::Prev() const { return static_cast<T*>(this->prev); }
 
-//TODO: Look through InsertAfter() InsertBefore() when you're awake
 template <class T>
 T* Link<T>::InsertAfter(T* toInsert)
 {
@@ -102,11 +100,11 @@ template <class T>
 T* Link<T>::DeleteAfter()
 {
 	Link* tempPointer = next;
-	if (next == nullptr)
+	if (!next)
 	{
 		return nullptr; //There was none to delete so we return nullptr
 	}
-	else if (next->next != nullptr)
+	else if (next->next)
 	{
 		next = next->next;
 		next->prev = this;
