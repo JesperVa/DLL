@@ -13,9 +13,21 @@ private:
 
 public:
 	List() : m_root(nullptr), m_last(nullptr) {};
+	~List()
+	{
+		while (m_root && m_root->next)
+		{
+			m_root = m_root->next;
+			delete m_root->prev;
+		}
+		delete m_root;
+	}
 
-	T* First() const;
-	T* Last() const;
+
+	T* First();
+	const T* First() const;
+	T* Last();
+	const T* Last() const;
 	T* PushFront(T*);
 	T* PopFront();
 	T* PushBack(T*);
@@ -41,10 +53,16 @@ bool List<T>::Invariant() const
 }
 
 template <class T>
-T* List<T>::First() const { return static_cast<T*>(this->m_root); }
+const T* List<T>::First() const { return static_cast<const T*>(this->m_root); }
 
 template <class T>
-T* List<T>::Last() const { return static_cast<T*>(this->m_last); }
+T* List<T>::First() { return static_cast<T*>(this->m_root); }
+
+template <class T>
+const T* List<T>::Last() const { return static_cast<const T*>(this->m_last); }
+
+template <class T>
+T* List<T>::Last() { return static_cast<T*>(this->m_last); }
 
 template <class T>
 T* List<T>::PushFront(T* toPush)

@@ -61,6 +61,8 @@ void TestDLL() {
 
     assert(myList.Invariant());
     std::cout << myList;    //should be 1 2 3 1 2 3
+	myList;
+
 	{Node* t = myList.PopFront(); assert(t->data == 1); delete t; }
     {Node* t = myList.PopFront(); assert(t->data == 2); delete t; }
     {Node* t = myList.PopFront(); assert(t->data == 3); delete t; }
