@@ -84,10 +84,7 @@ template <typename Arg>
 //template <class T, typename Arg>
 T* Link<T>::FindNext(const Arg& searchFor)
 {
-
 	Node* temp = static_cast<Node*>(next);
-
-	//Might be what Olle is looking for?
 	
 	if (temp->Match(searchFor))
 	{

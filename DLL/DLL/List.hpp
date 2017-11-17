@@ -101,9 +101,16 @@ template <class T>
 std::ostream& List<T>::Print(std::ostream& stream)
 {
 	Node* temp = static_cast<Node*>(m_root);
-	
+	if (temp)
+	{
+		do
+		{
+			temp->Print(stream);
+			temp = static_cast<Node*>(temp->next);
+		} while (temp);
+	}
 
-	return stream << "Hej";
+	return stream << std::endl;
 }
 
 template <class T>
