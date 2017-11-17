@@ -15,24 +15,25 @@ private:
 public:
 	Link() :next(nullptr), prev(nullptr) {}
 	virtual ~Link() = default;
-	T* Next();
-	T* Prev();
+	T* Next() const;
+	T* Prev() const;
 
 	T* InsertAfter(T*);
+	//T* InsertAfter(const T*);
 	T* InsertBefore(T*);
 	T* DeleteAfter();
 
 	template<typename Arg>
-	T* FindNext(const Arg&);
+	T* FindNext(const Arg&) const;
 
 	virtual std::ostream& Print(std::ostream& cout) { return cout; }
 
-	bool Invariant();
+	bool Invariant() const;
 
 };
 
 template <class T>
-bool Link<T>::Invariant()
+bool Link<T>::Invariant() const
 {
 	if (next && prev) { return next->prev == this && prev->next == this; }
 	else if(!next && !prev) { return true; }
@@ -41,13 +42,13 @@ bool Link<T>::Invariant()
 }
 
 template <class T>
-T* Link<T>::Next()
+T* Link<T>::Next() const
 {
 	return static_cast<T*>(this->next);
 }
 
 template <class T>
-T* Link<T>::Prev()
+T* Link<T>::Prev() const
 {
 	return static_cast<T*>(this->prev);
 }
@@ -94,7 +95,7 @@ T* Link<T>::InsertBefore(T* toInsert)
 template <class T>
 template <typename Arg>
 //template <class T, typename Arg>
-T* Link<T>::FindNext(const Arg& searchFor)
+T* Link<T>::FindNext(const Arg& searchFor) const
 {
 	Node* temp = static_cast<Node*>(next);
 	
@@ -106,7 +107,6 @@ T* Link<T>::FindNext(const Arg& searchFor)
 	{
 		return next->FindNext(searchFor); //Next isn't null, keep looking
 	}
-	
 	return nullptr; //We didn't find anything
 }
 

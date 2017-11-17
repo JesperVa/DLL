@@ -5,39 +5,39 @@ template <class T>
 class List : public Link<T>
 {
 private:
-	std::ostream& Print(std::ostream&);
+	std::ostream& Print(std::ostream&) const;
 	Link* m_root;
 	Link* m_last;
-	int count = 0;
+	int count = 0; //Used to double check with invariants
 
 public:
 	List() : m_root(nullptr), m_last(nullptr) {};
 
 	//~List();
-	T* First();
-	T* Last();
+	T* First() const;
+	T* Last() const;
 	T* PushFront(T*);
 	T* PopFront();
 	T* PushBack(T*);
 	template <class Arg>
 	T* FindFirst(const Arg& searchFor) { return FindNext(searchFor); }
-	
+
 	friend std::ostream& operator<<(std::ostream& cout, List& list) { return list.Print(cout); }
 	//void Check();
 
 
-	bool Invariant(); //Used for Asserts
+	bool Invariant() const; //Used for Asserts
 };
 
 
 template <class T>
-bool List<T>::Invariant()
+bool List<T>::Invariant() const
 {
 	if (count > 1)
 	{
 		return m_root && m_last && (m_root) == (m_root->next->prev) && (m_last) == (m_last->prev->next);
 	}
-	if(count == 1)
+	if (count == 1)
 	{
 		return m_root->next == nullptr && m_last->prev == nullptr && m_root->prev == nullptr && m_last->next == nullptr;
 	}
@@ -45,13 +45,13 @@ bool List<T>::Invariant()
 
 
 template <class T>
-T* List<T>::First()
+T* List<T>::First() const
 {
 	return static_cast<T*>(this->m_root);
 }
 
 template <class T>
-T* List<T>::Last()
+T* List<T>::Last() const
 {
 	return static_cast<T*>(this->m_last);
 }
@@ -98,16 +98,13 @@ T* List<T>::PopFront()
 
 //TODO: Rewrite at school
 template <class T>
-std::ostream& List<T>::Print(std::ostream& stream)
+std::ostream& List<T>::Print(std::ostream& stream) const
 {
 	Node* temp = static_cast<Node*>(m_root);
-	if (temp)
+	while (temp)
 	{
-		do
-		{
-			temp->Print(stream);
-			temp = static_cast<Node*>(temp->next);
-		} while (temp);
+		temp->Print(stream);
+		temp = static_cast<Node*>(temp->next);
 	}
 
 	return stream << std::endl;
