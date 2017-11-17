@@ -36,7 +36,7 @@ template <class T>
 bool Link<T>::Invariant() const
 {
 	if (next && prev) { return next->prev == this && prev->next == this; }
-	else if(!next && !prev) { return true; }
+	else if (!next && !prev) { return true; }
 	else if (!next && prev) { return prev->next == this; }
 	else if (next && !prev) { return next->prev == this; }
 }
@@ -53,17 +53,14 @@ T* Link<T>::InsertAfter(T* toInsert)
 {
 	Link* temp = static_cast<Link*>(toInsert);
 	temp->prev = this;
-	if (!next)
+	if (next) //If next isn't nullptr, set next-prev to temp
 	{
-		if (!next->next)
-		{
-			temp->next = next->next;
-		}
 		next->prev = temp;
 	}
 	temp->next = next;
 	temp->prev = this;
 	next = temp;
+
 	assert(this->Invariant());
 	return static_cast<T*>(temp);
 }
@@ -72,12 +69,8 @@ template <class T>
 T* Link<T>::InsertBefore(T* toInsert)
 {
 	Link* temp = static_cast<Link*>(toInsert);
-	if (!prev)
+	if (prev) //If prev isn't nullptr, set prev-next to temp
 	{
-		if (!prev->prev)
-		{
-			temp->prev = prev->prev;
-		}
 		prev->next = temp;
 	}
 	prev = temp;
@@ -92,12 +85,12 @@ template <typename Arg>
 T* Link<T>::FindNext(const Arg& searchFor) const
 {
 	Node* temp = static_cast<Node*>(next);
-	
+
 	if (temp->Match(searchFor))
 	{
 		return static_cast<T*>(temp); //A match
 	}
-	else if(temp->next)
+	else if (temp->next)
 	{
 		return next->FindNext(searchFor); //Next isn't null, keep looking
 	}
