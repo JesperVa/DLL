@@ -62,7 +62,11 @@ void TestDLL() {
     {Node* t = myList.PopFront(); assert(t->data == 3); delete t; }
     {Node* t = myList.PopFront(); assert(t->data == 1); delete t; }
     {Node* t = myList.PopFront(); assert(t->data == 2); delete t; }
-    {Node* t = myList.PopFront(); assert(t->data == 3); delete t; }
+    {
+		Node* t = myList.PopFront(); 
+		assert(t->data == 3);
+		delete t; 
+	}
     assert(myList.PopFront() == nullptr);
     assert(myList.PopFront() == nullptr);
     std::cout << myList << "end";

@@ -77,12 +77,18 @@ T* List<T>::PushFront(T* toPush)
 template <class T>
 T* List<T>::PopFront()
 {
+	T* temp = static_cast<T*>(m_root);
 	if (m_root == nullptr)
 	{
 		return nullptr;
 	}
-
-	T* temp = static_cast<T*>(m_root);
+	if (!m_root->next)
+	{
+		m_root = nullptr;
+		temp->next = temp->prev = nullptr;
+		return temp;
+	}
+	//If next exists we do this TODO:refactor
 	next = m_root = m_root->next;
 	m_root->prev = nullptr;
 	temp->next = temp->prev = nullptr;
