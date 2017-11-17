@@ -4,6 +4,10 @@
 #include <cassert>
 //#include "TestDLL.h"
 
+
+
+
+
 class Node :public Link<Node> {
 public:
     float data;
@@ -53,7 +57,7 @@ void TestDLL() {
     assert(myList.Last()->Prev()->data == 2);
     assert(myList.Invariant());
     std::cout << myList;    //should be 1 2 3 1 2 3
-    {Node* t = myList.PopFront(); assert(t->data == 1); delete t; }
+	{Node* t = myList.PopFront(); assert(t->data == 1); delete t; }
     {Node* t = myList.PopFront(); assert(t->data == 2); delete t; }
     {Node* t = myList.PopFront(); assert(t->data == 3); delete t; }
     {Node* t = myList.PopFront(); assert(t->data == 1); delete t; }
@@ -64,4 +68,12 @@ void TestDLL() {
     std::cout << myList << "end";
     assert(myList.Invariant());
     std::cin.get();
+}
+
+
+int main()
+{
+	int temp;
+	TestDLL();
+	std::cin >> temp;
 }

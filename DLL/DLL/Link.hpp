@@ -80,31 +80,39 @@ template <typename Arg>
 //template <class T, typename Arg>
 T* Link<T>::FindNext(const Arg& searchFor)
 {
-	Node* temp = static_cast<Node*>(next);
+
+	Node* temp = static_cast<Node*>(this);
 
 	//Might be what Olle is looking for?
 	
-	if (temp->Match(searchFor) && !this->next)
+	if (temp->Match(searchFor))
 	{
-		return static_cast<T*>(temp);
+		return static_cast<T*>(temp); //A match
+	}
+	else if(temp->next)
+	{
+		return next->FindNext(searchFor); //Next isn't null, keep looking
 	}
 	
-	return nullptr;
+	return nullptr; //We didn't find anything
 }
 
 template <class T>
 T* Link<T>::DeleteAfter()
 {
-	Link* tempPointer = nullptr;
+	Link* tempPointer = next;
 	if (next == nullptr)
 	{
 		return nullptr; //There was none to delete so we return nullptr
 	}
 	else if (next->next != nullptr)
 	{
-		tempPointer = next->next;
+		next = next->next;
 	}
-	delete next;
-	next = tempPointer;
-	return static_cast<T*>(this);
+	tempPointer->next = tempPointer->prev = nullptr;
+	return static_cast<T*>(tempPointer);
+
+
+	//next = tempPointer;
+	//return static_cast<T*>(this);
 }
