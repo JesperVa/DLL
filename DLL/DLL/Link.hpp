@@ -8,14 +8,11 @@ template <class T>
 class Link
 {
 private:
-	T* next; T* prev;
+	Link* next; Link* prev;
 	friend class List<T>;
 
-	//T* m_object;
-	//int const m_Capacity = 1; //Only one object per link at a time
-	
 public:
-	Link() = default;
+	Link() :next(nullptr), prev(nullptr) {}
 	virtual ~Link() = default;
 	T* Next();
 	T* Prev();
@@ -24,7 +21,7 @@ public:
 	T* InsertBefore(T*);
 	T* DeleteAfter();
 
-	template<class Arg>
+	template<typename Arg>
 	T* FindNext(const Arg&);
 
 	virtual std::ostream& Print(std::ostream& cout) { return cout; }
@@ -34,47 +31,62 @@ public:
 template <class T>
 T* Link<T>::Next()
 {
-	return this->next;
+	return static_cast<T*>(this->next);
 }
 
 template <class T>
 T* Link<T>::Prev()
 {
-	return this->prev;
+	return static_cast<T*>(this->prev);
 }
 
+//TODO: Look through InsertAfter() InsertBefore() when you're awake
 template <class T>
 T* Link<T>::InsertAfter(T* toInsert)
 {
-	//Might have to be change in case it's not a node
-	if (next != nullptr)
+	Link* temp = static_cast<Link*>(toInsert);
+	if (!next)
 	{
-		next.prev = toInsert;
+		temp->prev = this;
+		if (!next->next)
+		{
+			temp->next = next->next;
+		}
+		next->prev = temp;
 	}
-	next = toInsert;
-	return toInsert;
+	next = temp;
+	return static_cast<T*>(temp);
 }
 
 template <class T>
 T* Link<T>::InsertBefore(T* toInsert)
 {
-	if (prev != nullptr)
+	Link* temp = static_cast<Link*>(toInsert);
+	if (!prev)
 	{
-		prev.next = toInsert;
+		if (!prev->prev)
+		{
+			temp->prev = prev->prev;
+		}
+		prev->next = temp;
 	}
-	prev = toInsert;
-	return toInsert;
+	prev = temp;
+	return static_cast<T*>(temp);
 }
 
 
 template <class T>
-template <class Arg>
+template <typename Arg>
+//template <class T, typename Arg>
 T* Link<T>::FindNext(const Arg& searchFor)
 {
+	Node* temp = static_cast<Node*>(next);
+
 	//Might be what Olle is looking for?
-	if (!this->next.Match(searchFor) && !this->next)
+	
+	if (temp->Match(searchFor) && !this->next)
 	{
-		return searchFor.FindNext(searchFor);
+		return static_cast<T*>(temp);
 	}
 	
 	return nullptr;
@@ -83,29 +95,16 @@ T* Link<T>::FindNext(const Arg& searchFor)
 template <class T>
 T* Link<T>::DeleteAfter()
 {
-	T* tempPointer = nullptr;
+	Link* tempPointer = nullptr;
 	if (next == nullptr)
 	{
-		return nullptr;
+		return nullptr; //There was none to delete so we return nullptr
 	}
-	else if (next.next != nullptr)
+	else if (next->next != nullptr)
 	{
-		tempPointer = next.next;
+		tempPointer = next->next;
 	}
 	delete next;
 	next = tempPointer;
-	return this;
+	return static_cast<T*>(this);
 }
-
-
-//template <typename Arg, typename T>
-//template <class T, class Arg>
-//T* Link<T>::FindNext(const Arg& searchFor)
-//{
-
-//	if (!this->next.Match(searchFor) && !this->next)
-//	{
-//		return searchFor.findNext(searchFor);
-//	}
-//	return nullptr;
-//}
