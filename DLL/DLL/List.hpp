@@ -6,6 +6,8 @@ class List : public Link<T>
 {
 private:
 	std::ostream& Print(std::ostream&) const;
+
+	//TODO: Make m_root and m_last prev and next
 	Link* m_root;
 	Link* m_last;
 	int count = 0; //Used to double check with invariants
@@ -42,7 +44,6 @@ bool List<T>::Invariant() const
 		return m_root->next == nullptr && m_last->prev == nullptr && m_root->prev == nullptr && m_last->next == nullptr;
 	}
 }
-
 
 template <class T>
 T* List<T>::First() const
@@ -96,7 +97,6 @@ T* List<T>::PopFront()
 	return temp;
 }
 
-//TODO: Rewrite at school
 template <class T>
 std::ostream& List<T>::Print(std::ostream& stream) const
 {
@@ -107,7 +107,7 @@ std::ostream& List<T>::Print(std::ostream& stream) const
 		temp = static_cast<Node*>(temp->next);
 	}
 
-	return stream << std::endl;
+	return stream << std::endl; //Returns new-line to end the print
 }
 
 template <class T>
