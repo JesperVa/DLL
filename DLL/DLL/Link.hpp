@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <cassert>
 
 template <class T>
 class List;
@@ -36,7 +37,7 @@ bool Link<T>::Invariant()
 	if (next && prev) { return next->prev == this && prev->next == this; }
 	else if(!next && !prev) { return true; }
 	else if (!next && prev) { return prev->next == this; }
-	else if (next && !prev) { return next->pref == this; }
+	else if (next && !prev) { return next->prev == this; }
 }
 
 template <class T>
@@ -50,8 +51,6 @@ T* Link<T>::Prev()
 {
 	return static_cast<T*>(this->prev);
 }
-
-//1 2 2 3
 
 //TODO: Look through InsertAfter() InsertBefore() when you're awake
 template <class T>
@@ -70,6 +69,7 @@ T* Link<T>::InsertAfter(T* toInsert)
 	temp->next = next;
 	temp->prev = this;
 	next = temp;
+	assert(this->Invariant());
 	return static_cast<T*>(temp);
 }
 
@@ -86,6 +86,7 @@ T* Link<T>::InsertBefore(T* toInsert)
 		prev->next = temp;
 	}
 	prev = temp;
+	assert(this->Invariant());
 	return static_cast<T*>(temp);
 }
 
@@ -121,7 +122,9 @@ T* Link<T>::DeleteAfter()
 	else if (next->next != nullptr)
 	{
 		next = next->next;
+		next->prev = this;
 	}
 	tempPointer->next = tempPointer->prev = nullptr;
+	assert(this->Invariant());
 	return static_cast<T*>(tempPointer);
 }
