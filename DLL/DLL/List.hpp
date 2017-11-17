@@ -46,16 +46,10 @@ bool List<T>::Invariant() const
 }
 
 template <class T>
-T* List<T>::First() const
-{
-	return static_cast<T*>(this->m_root);
-}
+T* List<T>::First() const { return static_cast<T*>(this->m_root); }
 
 template <class T>
-T* List<T>::Last() const
-{
-	return static_cast<T*>(this->m_last);
-}
+T* List<T>::Last() const { return static_cast<T*>(this->m_last); }
 
 template <class T>
 T* List<T>::PushFront(T* toPush)

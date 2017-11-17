@@ -42,16 +42,10 @@ bool Link<T>::Invariant() const
 }
 
 template <class T>
-T* Link<T>::Next() const
-{
-	return static_cast<T*>(this->next);
-}
+T* Link<T>::Next() const { return static_cast<T*>(this->next); }
 
 template <class T>
-T* Link<T>::Prev() const
-{
-	return static_cast<T*>(this->prev);
-}
+T* Link<T>::Prev() const { return static_cast<T*>(this->prev); }
 
 //TODO: Look through InsertAfter() InsertBefore() when you're awake
 template <class T>
