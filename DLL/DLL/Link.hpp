@@ -26,7 +26,18 @@ public:
 
 	virtual std::ostream& Print(std::ostream& cout) { return cout; }
 
+	bool Invariant();
+
 };
+
+template <class T>
+bool Link<T>::Invariant()
+{
+	if (next && prev) { return next->prev == this && prev->next == this; }
+	else if(!next && !prev) { return true; }
+	else if (!next && prev) { return prev->next == this; }
+	else if (next && !prev) { return next->pref == this; }
+}
 
 template <class T>
 T* Link<T>::Next()
@@ -113,8 +124,4 @@ T* Link<T>::DeleteAfter()
 	}
 	tempPointer->next = tempPointer->prev = nullptr;
 	return static_cast<T*>(tempPointer);
-
-
-	//next = tempPointer;
-	//return static_cast<T*>(this);
 }

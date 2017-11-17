@@ -4,9 +4,12 @@
 #include <cassert>
 //#include "TestDLL.h"
 
-
-
-
+#ifdef _DEBUG
+#ifndef DBG_NEW
+#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+#define new DBG_NEW
+#endif
+#endif  // _DEBUG
 
 class Node :public Link<Node> {
 public:
@@ -55,6 +58,7 @@ void TestDLL() {
 
     myList.First()->Next()->InsertAfter(tempA3)->InsertAfter(tempB1);
     assert(myList.Last()->Prev()->data == 2);
+
     assert(myList.Invariant());
     std::cout << myList;    //should be 1 2 3 1 2 3
 	{Node* t = myList.PopFront(); assert(t->data == 1); delete t; }
@@ -62,11 +66,7 @@ void TestDLL() {
     {Node* t = myList.PopFront(); assert(t->data == 3); delete t; }
     {Node* t = myList.PopFront(); assert(t->data == 1); delete t; }
     {Node* t = myList.PopFront(); assert(t->data == 2); delete t; }
-    {
-		Node* t = myList.PopFront(); 
-		assert(t->data == 3);
-		delete t; 
-	}
+    {Node* t = myList.PopFront(); assert(t->data == 3);delete t; }
     assert(myList.PopFront() == nullptr);
     assert(myList.PopFront() == nullptr);
     std::cout << myList << "end";
@@ -74,10 +74,9 @@ void TestDLL() {
     std::cin.get();
 }
 
-
 int main()
 {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	int temp;
 	TestDLL();
-	std::cin >> temp;
 }

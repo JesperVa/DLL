@@ -35,7 +35,7 @@ bool List<T>::Invariant()
 {
 	if (count > 1)
 	{
-		return (m_root) == (m_root->next->prev) && (m_last) == (m_last->prev->next);
+		return m_root && m_last && (m_root) == (m_root->next->prev) && (m_last) == (m_last->prev->next);
 	}
 	if(count == 1)
 	{
