@@ -26,7 +26,7 @@ public:
 	template<typename Arg>
 	T* FindNext(const Arg&) const;
 
-	virtual std::ostream& Print(std::ostream& cout) { return cout; }
+	virtual std::ostream& Print(std::ostream& cout) const { return cout; }
 
 	bool Invariant() const;
 

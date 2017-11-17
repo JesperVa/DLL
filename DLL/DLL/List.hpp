@@ -22,7 +22,7 @@ public:
 	T* PopFront();
 	T* PushBack(T*);
 	template <class Arg>
-	T* FindFirst(const Arg& searchFor) { return FindNext(searchFor); }
+	T* FindFirst(const Arg& searchFor) const { return FindNext(searchFor); }
 
 	friend std::ostream& operator<<(std::ostream& cout, List& list) { return list.Print(cout); }
 	//void Check();
