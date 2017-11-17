@@ -65,6 +65,7 @@ T* List<T>::PushFront(T* toPush)
 	temp->prev = nullptr;
 	m_root->prev = temp;
 	next = m_root = temp;
+
 	count++;
 	return static_cast<T*>(m_root);
 }
@@ -84,10 +85,12 @@ T* List<T>::PopFront()
 		return temp;
 	}
 	//If next exists we do this TODO:refactor
+
 	next = m_root = m_root->next;
 	m_root->prev = nullptr;
 	temp->next = temp->prev = nullptr;
 	count--;
+
 	return temp;
 }
 
@@ -114,11 +117,12 @@ T* List<T>::PushBack(T* toPush)
 		next = prev = m_last = m_root = temp;
 		return toPush;
 	}
+
 	temp->prev = m_last;
 	temp->next = nullptr;
-	//Should we assume toPush is already pointing at nullptr in both directions?
 	m_last->next = temp;
 	prev = m_last = temp;
 	count++;
+
 	return static_cast<T*>(m_last);
 }
