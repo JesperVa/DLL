@@ -124,5 +124,3 @@ T* List<T>::PushBack(T* toPush)
 	count++;
 	return static_cast<T*>(m_last);
 }
-
-
