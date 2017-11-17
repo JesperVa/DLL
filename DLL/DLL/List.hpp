@@ -22,8 +22,6 @@ public:
 		}
 		delete m_root;
 	}
-
-
 	T* First();
 	const T* First() const;
 	T* Last();
