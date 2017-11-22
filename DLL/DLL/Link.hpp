@@ -15,8 +15,10 @@ private:
 public:
 	Link() :next(nullptr), prev(nullptr) {}
 	virtual ~Link() = default;
-	T* Next() const;
-	T* Prev() const;
+	T* Next();
+	const T* Next() const;
+	T* Prev();
+	const T* Prev() const;
 
 	T* InsertAfter(T*);
 	T* InsertBefore(T*);
@@ -41,10 +43,16 @@ bool Link<T>::Invariant() const
 }
 
 template <class T>
-T* Link<T>::Next() const { return static_cast<T*>(this->next); }
+const T* Link<T>::Next() const { return static_cast<const T*>(this->next); }
 
 template <class T>
-T* Link<T>::Prev() const { return static_cast<T*>(this->prev); }
+T* Link<T>::Next() { return static_cast<T*>(this->next); }
+
+template <class T>
+const T* Link<T>::Prev() const { return static_cast<const T*>(this->prev); }
+
+template <class T>
+T* Link<T>::Prev() { return static_cast<T*>(this->prev); }
 
 template <class T>
 T* Link<T>::InsertAfter(T* toInsert)

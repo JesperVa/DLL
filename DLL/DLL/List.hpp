@@ -15,12 +15,15 @@ public:
 	List() : m_root(nullptr), m_last(nullptr) {};
 	~List()
 	{
-		while (m_root && m_root->next)
+		while (m_root->next)
 		{
+			Link* temp = m_root;
 			m_root = m_root->next;
-			delete m_root->prev;
+			delete temp;
 		}
-		delete m_root;
+		//If we jump out of the loop we delete the root because there is no other next
+		//m_root should always be set to nullptr if nothing is in the list
+		delete m_root; 
 	}
 	T* First();
 	const T* First() const;
@@ -69,6 +72,7 @@ T* List<T>::PushFront(T* toPush)
 	if (m_last == nullptr)
 	{
 		next = prev = m_last = m_root = temp;
+		count++;
 		return toPush; //We just put the same object as first in list
 	}
 
@@ -125,6 +129,7 @@ T* List<T>::PushBack(T* toPush)
 	{
 		//If root doesn't exists, no values exists in list and thus the root and last is the same object
 		next = prev = m_last = m_root = temp;
+		count++;
 		return toPush;
 	}
 
