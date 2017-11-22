@@ -97,6 +97,7 @@ T* List<T>::PopFront()
 	{
 		m_root = nullptr;
 		temp->next = temp->prev = nullptr;
+		count--;
 		return temp;
 	}
 
