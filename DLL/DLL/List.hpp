@@ -15,7 +15,7 @@ public:
 	List() : m_root(nullptr), m_last(nullptr) {};
 	~List()
 	{
-		while (m_root->next)
+		while (m_root && m_root->next)
 		{
 			Link* temp = m_root;
 			m_root = m_root->next;
@@ -25,10 +25,12 @@ public:
 		//m_root should always be set to nullptr if nothing is in the list
 		delete m_root; 
 	}
+
 	T* First();
 	const T* First() const;
 	T* Last();
 	const T* Last() const;
+
 	T* PushFront(T*);
 	T* PopFront();
 	T* PushBack(T*);
