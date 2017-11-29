@@ -43,21 +43,21 @@ bool Link<T>::Invariant() const
 }
 
 template <class T>
-const T* Link<T>::Next() const { return static_cast<const T*>(this->next); }
+const T* Link<T>::Next() const { return dynamic_cast<const T*>(this->next); }
 
 template <class T>
-T* Link<T>::Next() { return static_cast<T*>(this->next); }
+T* Link<T>::Next() { return dynamic_cast<T*>(this->next); }
 
 template <class T>
-const T* Link<T>::Prev() const { return static_cast<const T*>(this->prev); }
+const T* Link<T>::Prev() const { return dynamic_cast<const T*>(this->prev); }
 
 template <class T>
-T* Link<T>::Prev() { return static_cast<T*>(this->prev); }
+T* Link<T>::Prev() { return dynamic_cast<T*>(this->prev); }
 
 template <class T>
 T* Link<T>::InsertAfter(T* toInsert)
 {
-	Link* temp = static_cast<Link*>(toInsert);
+	Link* temp = dynamic_cast<Link*>(toInsert);
 	temp->prev = this;
 	if (next) //If next isn't nullptr, set next-prev to temp
 	{
@@ -68,20 +68,20 @@ T* Link<T>::InsertAfter(T* toInsert)
 	next = temp;
 
 	assert(this->Invariant());
-	return static_cast<T*>(temp);
+	return dynamic_cast<T*>(temp);
 }
 
 template <class T>
 T* Link<T>::InsertBefore(T* toInsert)
 {
-	Link* temp = static_cast<Link*>(toInsert);
+	Link* temp = dynamic_cast<Link*>(toInsert);
 	if (prev) //If prev isn't nullptr, set prev-next to temp
 	{
 		prev->next = temp;
 	}
 	prev = temp;
 	assert(this->Invariant());
-	return static_cast<T*>(temp);
+	return dynamic_cast<T*>(temp);
 }
 
 
@@ -90,17 +90,21 @@ template <typename Arg>
 //template <class T, typename Arg>
 T* Link<T>::FindNext(const Arg& searchFor) const
 {
-	Node* temp = static_cast<Node*>(next);
+	Node* temp = dynamic_cast<Node*>(next);
 
+	//We reached the head of the circular list
+	if (!temp) 
+	{
+		return nullptr;
+	}
 	if (temp->Match(searchFor))
 	{
-		return static_cast<T*>(temp); //A match
+		return dynamic_cast<T*>(temp); //A match
 	}
 	else if (temp->next)
 	{
 		return next->FindNext(searchFor); //Next isn't null, keep looking
 	}
-	return nullptr; //We didn't find anything
 }
 
 
@@ -119,5 +123,5 @@ T* Link<T>::DeleteAfter()
 	}
 	tempPointer->next = tempPointer->prev = nullptr;
 	assert(this->Invariant());
-	return static_cast<T*>(tempPointer);
+	return dynamic_cast<T*>(tempPointer);
 }
